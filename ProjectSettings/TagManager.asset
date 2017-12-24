@@ -5,9 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gold
-  - Bullet
-  - Boss
-  - BossBullet
+  - Undefined
+  - Enemy
   layers:
   - Default
   - TransparentFX
