@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95757578333329998}
   - component: {fileID: 222969710470860900}
   - component: {fileID: 82772999150547330}
+  - component: {fileID: 114695451369342306}
   m_Layer: 0
   m_Name: RetroExplosion
   m_TagString: Untagged
@@ -38,7 +39,7 @@ AudioSource:
   m_GameObject: {fileID: 1342981068166568}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: a3a3da7df362bfc4bb89ccd99b382fd8,
+  OutputAudioMixerGroup: {fileID: 243957773345987778, guid: a4bd35a101c74e44ea98f3d654fbe425,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 3aeb48463bbf885479882b7db58cb669, type: 3}
   m_PlayOnAwake: 1
@@ -128,6 +129,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114695451369342306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1342981068166568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ed687351c305445824ebea9bf56c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 1
 --- !u!212 &212516356737649612
 SpriteRenderer:
   m_ObjectHideFlags: 1

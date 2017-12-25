@@ -6,13 +6,21 @@ using UnityEngine;
 public class MainPlane : MonoBehaviour, IHealth
 {
     #region Prefabricated
+    //速度
     [SerializeField]
     private float speed = 5f;
+    //添加子弹
     [SerializeField]
     private GameObject bullet;
-    private Vector3 direction;
+    //添加死亡特效
     [SerializeField]
     private Object explosionFX;
+
+    private Vector3 direction;
+
+    private float fireRate = 0.5f;
+    private float fireTime = 0f;
+
 
     private Transform trans;
     private Vector3 vectorSpeed;
@@ -38,28 +46,54 @@ public class MainPlane : MonoBehaviour, IHealth
     {
         trans = GetComponent<Transform>();
         rig = GetComponent<Rigidbody2D>();
-        rig.velocity = Vector3.up;
+        //rig.velocity = Vector3.up;
         coll = GetComponent<Collider2D>();
+
         coll.enabled = false;
         StartCoroutine(DelayColl());
     }
     private void Start()
     {
-        MaxX = PlayXY.MaxX;
-        MinX = PlayXY.MinX;
-        MaxY = PlayXY.MaxY;
-        MinY = PlayXY.MinY;
+        MaxX = PlayXY.MaxX -0.5f;
+        MinX = PlayXY.MinX +0.5f;
+        MaxY = PlayXY.MaxY -0.5f;
+        MinY = PlayXY.MinY +0.5f;
     }
 
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Fire();
+            FireOnce();
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            FireStart();
         }
         ClampFrame();
     }
 
+    //连发
+    public void FireStart()
+    {
+        if (health <= 0) return;
+            fireTime += Time.deltaTime;
+        if (fireTime > fireRate)
+        {
+            Instantiate(bullet, trans.position + new Vector3(0,0.5f,0), Quaternion.identity);
+            fireTime = 0;
+        }
+    }
+
+    //单次发射子弹
+    public void FireOnce()
+    {
+        if (health <= 0) return;
+        Instantiate(bullet, trans.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+        fireTime = 0;
+    }
+
+    //限制飞机
     private void ClampFrame()
     {
         trans.position = new Vector3(Mathf.Clamp(trans.position.x, MinX, MaxX),
@@ -67,6 +101,7 @@ public class MainPlane : MonoBehaviour, IHealth
                                          trans.position.z);
     }
 
+    //飞机移动
     private void FixedUpdate()
     {
         trans.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Time.deltaTime * speed;
@@ -78,10 +113,10 @@ public class MainPlane : MonoBehaviour, IHealth
         rig.velocity = direction * speed;
     }
 
-    private void Fire()
-    {
-        Instantiate(bullet, trans.position + new Vector3(0, 0.75f, 0), Quaternion.identity);
-    }
+    //private void Fire()
+    //{
+    //    Instantiate(bullet, trans.position + new Vector3(0, 0.75f, 0), Quaternion.identity);
+    //}
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -93,7 +128,7 @@ public class MainPlane : MonoBehaviour, IHealth
 
     private IEnumerator DelayColl()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         coll.enabled = true;
     }
 

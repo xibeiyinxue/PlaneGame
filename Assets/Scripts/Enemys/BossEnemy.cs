@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BossEnemy : MonoBehaviour,IHealth
+public class BossEnemy : MonoBehaviour, IHealth
 {
     [SerializeField]
     private GameObject bulletPrefab;
@@ -20,7 +20,7 @@ public class BossEnemy : MonoBehaviour,IHealth
 
     private Vector3 leftDirection;
     private Vector3 rightDirection;
-    
+
     protected int health = 10;
     public int Health
     {
@@ -40,7 +40,7 @@ public class BossEnemy : MonoBehaviour,IHealth
         rightDirection = (Vector3.right + Vector3.down * 0.1f).normalized;
         direction = leftDirection;
     }
-    
+
     private void Update()
     {
         if (transform.position.y < MinY)
@@ -50,7 +50,7 @@ public class BossEnemy : MonoBehaviour,IHealth
         {
             direction = leftDirection;
         }
-        else if (transform.position.x <MinX)
+        else if (transform.position.x < MinX)
         {
             direction = rightDirection;
         }
@@ -65,7 +65,11 @@ public class BossEnemy : MonoBehaviour,IHealth
 
     private void Fire()
     {
-        Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+        for (int i = 0; i < 8; i++)
+        {
+            Instantiate(bulletPrefab, this.transform.position, Quaternion.Euler(0,0,45 * i));
+        }
+
     }
 
     public void Damage(int val)

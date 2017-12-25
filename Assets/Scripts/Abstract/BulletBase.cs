@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 public abstract class BulletBase : MonoBehaviour
 {
     [SerializeField]
-    protected float speed = 1f;
+    protected float speed = 1f;//子弹速度
     [SerializeField]
-    protected int power = 1;
-    
+    protected int power = 1;//子弹威力
+
     protected Transform trans;
 
     private void Awake()
     {
         trans = GetComponent<Transform>();
     }
-
+    
     private void Update()
     {
         Move();
@@ -30,6 +31,7 @@ public abstract class BulletBase : MonoBehaviour
         {
             collision.GetComponent<IHealth>().Damage(power);
             //print("Bullet" + collision.GetComponent<IHealth>().Health);
+            Destroy(this.gameObject);
         }
     }
 }
